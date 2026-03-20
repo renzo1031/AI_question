@@ -1,0 +1,175 @@
+<view class="container" style="padding-top: {{navHeight}}px;">
+  <!-- 顶部背景 -->
+  <view class="header-bg"></view>
+
+  <!-- 自定义导航栏 -->
+  <view class="custom-nav {{isScrolled ? 'scrolled' : ''}}" style="height: {{navHeight}}px;">
+    <view class="nav-content" style="padding-top: {{statusBarHeight}}px; height: {{navHeight - statusBarHeight}}px; line-height: {{navHeight - statusBarHeight}}px;">
+      <text class="nav-title">我的错题本</text>
+    </view>
+  </view>
+
+  <!-- 年级选择 -->
+  <view class="grade-section">
+    <scroll-view class="grade-scroll" scroll-x enable-flex show-scrollbar="{{false}}">
+      <view class="grade-list">
+        <view 
+          class="grade-item {{gradeIndex === index ? 'active' : ''}}" 
+          wx:for="{{grades}}" 
+          wx:key="*this"
+          bindtap="onGradeSelect"
+          data-index="{{index}}"
+        >
+          {{item}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 顶部筛选区域 -->
+  <view class="filter-container {{isScrolled ? 'scrolled' : ''}}">
+    <!-- 搜索框 -->
+    <view class="search-box">
+      <icon type="search" size="14" color="#999"></icon>
+      <input placeholder="在错题中搜寻关键字..." bindconfirm="onSearch" confirm-type="search" value="{{keyword}}" />
+    </view>
+    
+    <!-- 学科选择 (横向) -->
+    <scroll-view class="subject-scroll" scroll-x enable-flex show-scrollbar="{{false}}">
+      <view class="subject-list">
+        <view 
+          class="subject-item {{subjectIndex === index ? 'active' : ''}}" 
+          wx:for="{{subjects}}" 
+          wx:key="*this"
+          bindtap="onSubjectSelect"
+          data-index="{{index}}"
+        >
+          <text class="sub-icon" wx:if="{{index > 0}}">{{subjectIcons[item] || '📝'}}</text>
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 章节与难度筛选 (保留 Picker，但样式美化) -->
+    <view class="filter-row">
+      <picker bindchange="onChapterChange" value="{{chapterIndex}}" range="{{chapters}}" class="flex-1">
+        <view class="filter-btn {{chapterIndex > 0 ? 'active' : ''}}">
+          <text class="truncate">{{chapterIndex > 0 ? chapters[chapterIndex] : '全部章节'}}</text>
+          <text class="arrow-down"></text>
+        </view>
+      </picker>
+
+      <picker bindchange="onDifficultyChange" value="{{difficultyIndex}}" range="{{difficulties}}" class="flex-1">
+        <view class="filter-btn {{difficultyIndex > 0 ? 'active' : ''}}">
+          <text>{{difficultyIndex > 0 ? difficulties[difficultyIndex] : '全部难度'}}</text>
+          <text class="arrow-down"></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 错题列表 -->
+  <view class="mistake-list">
+    <view class="content-wrapper">
+      <!-- 智能分析卡片 -->
+      <view class="analysis-card" wx:if="{{total > 0}}">
+        <view class="analysis-header">
+          <view class="analysis-badge">
+            <text class="ai-icon">🤖</text>
+            <text class="ai-text">智能分析</text>
+          </view>
+          <view class="analysis-time">今日更新</view>
+        </view>
+        
+        <view class="analysis-content">
+          <view class="analysis-grid">
+            <view class="analysis-item">
+              <view class="analysis-icon">🎯</view>
+              <view class="analysis-info">
+                <text class="analysis-value">{{total}}</text>
+                <text class="analysis-label">错题总数</text>
+              </view>
+            </view>
+            
+            <view class="analysis-item">
+              <view class="analysis-icon">📈</view>
+              <view class="analysis-info">
+                <text class="analysis-value">85%</text>
+                <text class="analysis-label">改进率</text>
+              </view>
+            </view>
+            
+            <view class="analysis-item">
+              <view class="analysis-icon">⏱️</view>
+              <view class="analysis-info">
+                <text class="analysis-value">2.5h</text>
+                <text class="analysis-label">预计时长</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="analysis-suggestion">
+            <text class="suggestion-text">建议重点练习数学函数和几何图形相关题目，这将有助于提升你的逻辑思维能力。</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="stats-bar" wx:if="{{total > 0}}">
+        <view class="stats-info">
+          已收录 <text class="count">{{total}}</text> 道错题
+        </view>
+        <view class="stats-hint">待攻克知识点</view>
+      </view>
+
+      <block wx:if="{{list.length > 0}}">
+        <view class="mistake-card" wx:for="{{list}}" wx:key="index" bindtap="viewDetail" data-id="{{item.question.id}}">
+          <view class="card-header">
+            <view class="card-tags">
+              <view class="tag subject">{{item.question.tags[0] || '学科'}}</view>
+              <view class="tag type">{{item.question.question_type}}</view>
+              <view class="tag difficulty">Lv.{{item.question.difficulty}}</view>
+            </view>
+            <view class="card-time">{{item.displayTime}}</view>
+          </view>
+          
+          <view class="card-body">
+            <rich-text nodes="{{item.renderedContent}}"></rich-text>
+            <view class="last-answer" wx:if="{{item.last_answer}}">
+              上次回答：<text class="ans-val">{{item.last_answer}}</text>
+            </view>
+          </view>
+          
+          <view class="card-footer">
+            <view class="error-count">
+              <text class="icon">🔥</text>
+              错误次数：<text class="num">{{item.wrong_count}}</text>
+            </view>
+            <view class="detail-btn">
+              详情 <text class="arrow">➜</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="load-status">
+          <text wx:if="{{loadingMore}}">努力加载中...</text>
+          <text wx:elif="{{!hasMore}}">暂时只有这么多错题啦</text>
+        </view>
+      </block>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:else>
+        <image src="/images/empty-mistake.svg" mode="aspectFit" class="empty-img"></image>
+        <text class="empty-text">太棒了，目前还没有错题记录</text>
+        <view class="empty-btn" bindtap="switchToPractice">去练习巩固一下</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-action" wx:if="{{list.length > 0}}">
+    <view class="action-btn primary" bindtap="generatePractice">
+      <text class="icon">⚡</text>
+      <text>错题重练</text>
+    </view>
+  </view>
+</view>

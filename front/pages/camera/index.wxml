@@ -1,0 +1,67 @@
+<view class="camera-container">
+  <camera 
+    mode="normal" 
+    device-position="{{devicePosition}}" 
+    flash="{{flashMode}}" 
+    binderror="error" 
+    class="camera-view"
+  >
+    <!-- 覆盖层 -->
+    <view class="camera-overlay">
+      <!-- 顶部操作栏 -->
+      <view class="top-bar" style="padding-top: {{navHeight}}px;">
+        <view class="icon-btn" bindtap="handleBack">
+          <text class="icon-back">✕</text>
+        </view>
+        <view class="flash-btn" bindtap="toggleFlash">
+          <text class="icon-flash">{{flashMode === 'on' ? '⚡ On' : '⚡ Off'}}</text>
+        </view>
+      </view>
+
+      <!-- 扫描框区域 -->
+      <view class="scan-area">
+        <view class="scan-box">
+          <view class="corner top-left"></view>
+          <view class="corner top-right"></view>
+          <view class="corner bottom-left"></view>
+          <view class="corner bottom-right"></view>
+          <!-- 扫描动画线 -->
+          <view class="scan-line"></view>
+        </view>
+        <view class="scan-tip">文字对齐参考线，便于识别题目</view>
+      </view>
+
+      <!-- 底部控制栏 -->
+      <view class="bottom-bar">
+        <view class="history-panel" wx:if="{{historyList.length}}">
+          <view class="history-header">
+            <text class="history-title">搜题历史</text>
+            <text class="history-clear" bindtap="clearHistory">清空</text>
+          </view>
+          <scroll-view class="history-list" scroll-x="true" show-scrollbar="{{false}}">
+            <view class="history-item" wx:for="{{historyList}}" wx:key="id" data-index="{{index}}" bindtap="openHistory">
+              <image class="history-thumb" src="{{item.imagePath}}" mode="aspectFill"></image>
+              <view class="history-info">
+                <text class="history-q" user-select="false">{{item.questionContent}}</text>
+                <text class="history-meta" wx:if="{{item.meta}}">{{item.meta}}</text>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+
+        <view class="controls-row">
+          <view class="album-btn" bindtap="chooseFromAlbum">
+            <view class="album-icon">🖼️</view>
+            <text>相册</text>
+          </view>
+          
+          <view class="shutter-btn-outer" bindtap="takePhoto">
+            <view class="shutter-btn-inner"></view>
+          </view>
+  
+          <view class="spacer"></view> <!-- 占位保持快门居中 -->
+        </view>
+      </view>
+    </view>
+  </camera>
+</view>

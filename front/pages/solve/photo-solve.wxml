@@ -1,0 +1,66 @@
+<view class="photo-solve-container">
+  <camera
+    device-position="{{devicePosition}}"
+    flash="{{flashMode}}"
+    binderror="error"
+    class="camera-view"
+  >
+    <view class="camera-overlay">
+      <view class="nav-bar" style="padding-top: {{navHeight}}px">
+        <view class="nav-back" bindtap="handleBack">
+          <text class="icon-back">←</text>
+        </view>
+        <view class="nav-title">拍照搜题</view>
+        <view class="nav-flash" bindtap="toggleFlash">
+          <text class="icon-flash">{{flashMode === 'on' ? '⚡' : '○'}}</text>
+        </view>
+      </view>
+
+      <view class="scan-frame">
+        <view class="scan-line"></view>
+        <view class="scan-corner top-left"></view>
+        <view class="scan-corner top-right"></view>
+        <view class="scan-corner bottom-left"></view>
+        <view class="scan-corner bottom-right"></view>
+        <text class="scan-tip">将题目放入框内</text>
+      </view>
+
+      <view class="camera-controls">
+        <view class="control-btn album-btn" bindtap="chooseFromAlbum">
+          <text class="icon-album">🖼️</text>
+          <text class="btn-text">相册</text>
+        </view>
+        <view class="control-btn photo-btn" bindtap="takePhoto">
+          <view class="photo-circle">
+            <view class="photo-inner"></view>
+          </view>
+        </view>
+        <view class="control-btn history-btn" bindtap="handleBack">
+          <text class="icon-history">📋</text>
+          <text class="btn-text">历史</text>
+        </view>
+      </view>
+    </view>
+  </camera>
+
+  <view class="history-panel" wx:if="{{historyList.length > 0}}">
+    <view class="history-header">
+      <text class="history-title">最近搜题</text>
+      <text class="history-clear" bindtap="clearHistory">清空</text>
+    </view>
+    <scroll-view scroll-x class="history-scroll">
+      <view class="history-items">
+        <view
+          class="history-item"
+          wx:for="{{historyList}}"
+          wx:key="id"
+          bindtap="openHistory"
+          data-index="{{index}}"
+        >
+          <image class="history-image" src="{{item.imagePath}}" mode="aspectFill" />
+          <text class="history-content">{{item.questionContent}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

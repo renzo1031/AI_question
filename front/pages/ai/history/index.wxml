@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="history-list">
+    <view class="history-item" wx:for="{{conversations}}" wx:key="id" bindtap="goToChat" data-id="{{item.id}}">
+      <view class="item-header">
+        <text class="provider-tag">{{item.ai_provider || 'AI'}}</text>
+        <text class="time">{{item.updated_at_formatted}}</text>
+      </view>
+      <view class="item-content">
+        <text class="question">{{item.messages[0].content}}</text>
+      </view>
+      <view class="item-footer">
+        <text class="count">共 {{item.messages.length}} 条对话</text>
+        <text class="arrow">></text>
+      </view>
+    </view>
+    
+    <view class="empty" wx:if="{{!loading && conversations.length === 0}}">
+      <image src="/images/empty_mistake.png" mode="aspectFit"></image>
+      <text>暂无历史对话</text>
+    </view>
+    
+    <view class="loading" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+    
+    <view class="no-more" wx:if="{{!loading && conversations.length > 0 && !hasMore}}">
+      <text>没有更多了</text>
+    </view>
+  </view>
+</view>

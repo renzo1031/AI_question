@@ -1,0 +1,852 @@
+page {
+  background-color: var(--color-bg);
+  /* 练习页面专用配色 - 极淡天空蓝主题 */
+  --practice-primary: #0EA5E9;
+  --practice-primary-light: #38BDF8;
+  --practice-primary-dark: #0284C7;
+  --practice-text-primary: #1E293B;
+  --practice-text-secondary: #475569;
+  --practice-text-light: #64748B;
+  --practice-bg-card: #FFFFFF;
+  --practice-bg-section: #F0F9FF;
+  --practice-border: #E0F2FE;
+  --practice-shadow: var(--shadow-md);
+}
+
+.container {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 顶部背景 - 天空蓝渐变 */
+.header-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 600rpx;
+  background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 50%, var(--color-bg) 100%);
+  z-index: -1;
+}
+
+/* 自定义导航栏 */
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.custom-nav.scrolled {
+  background: rgba(240, 249, 255, 0.85);
+  backdrop-filter: blur(12px);
+  /* 边缘渐变效果：底部边缘虚化 */
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.nav-content {
+  position: absolute;
+  left: 40rpx;
+  display: flex;
+  align-items: center;
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--practice-text-primary);
+}
+
+.nav-title-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-subtitle {
+  font-size: 24rpx;
+  color: var(--practice-text-secondary);
+  margin-top: 4rpx;
+}
+
+/* 快速统计卡片 */
+.stats-section {
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.stats-cards {
+  display: flex;
+  gap: 20rpx;
+  justify-content: space-between;
+}
+
+.stat-card {
+  flex: 1;
+  background: var(--practice-bg-card);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: var(--practice-shadow);
+  border: 1px solid var(--practice-border);
+  transition: all 0.3s ease;
+}
+
+.stat-card:active {
+  transform: scale(0.98);
+}
+
+.stat-icon {
+  font-size: 40rpx;
+  margin-bottom: 12rpx;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--practice-primary);
+  margin-bottom: 4rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: var(--practice-text-secondary);
+}
+
+/* 年级选择 */
+.grade-section {
+  padding: 20rpx 30rpx;
+  background: transparent;
+  position: relative;
+}
+
+.grade-scroll {
+  white-space: nowrap;
+  padding: 0 30rpx;
+  width: 100%;
+  box-sizing: border-box;
+  /* 添加左右边缘渐变遮罩，使滚动更自然 */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.grade-list {
+  display: flex;
+  padding-right: 40rpx;
+}
+
+.grade-item {
+  display: inline-block;
+  padding: 16rpx 32rpx;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+  color: var(--practice-text-secondary);
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 32rpx;
+  transition: all 0.3s;
+  border: 1px solid var(--practice-border);
+}
+
+.grade-text {
+  font-weight: 500;
+}
+
+.grade-item.active {
+  background: var(--practice-primary);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(14, 165, 233, 0.3);
+  border-color: var(--practice-primary);
+}
+
+/* 内容区域 */
+.content-wrapper {
+  padding: 0 30rpx;
+}
+
+.section {
+  margin-bottom: 50rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24rpx;
+  padding: 0 10rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--practice-text-primary);
+}
+
+.section-subtitle {
+  font-size: 24rpx;
+  color: var(--practice-primary);
+  font-weight: 500;
+}
+
+/* 学科网格 - 现代卡片设计 */
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20rpx;
+}
+
+.subject-card {
+  background: var(--practice-bg-card);
+  border-radius: 24rpx;
+  padding: 30rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--practice-shadow);
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: linear-gradient(90deg, var(--practice-primary), var(--practice-primary-light));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.subject-card.active::before {
+  opacity: 1;
+}
+
+.subject-card.active {
+  border-color: var(--practice-primary);
+  background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%);
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 24rpx rgba(14, 165, 233, 0.15);
+}
+
+.subject-icon-wrapper {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: var(--practice-bg-section);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+  transition: all 0.3s ease;
+}
+
+.subject-card.active .subject-icon-wrapper {
+  background: var(--practice-primary);
+}
+
+.subject-icon {
+  font-size: 32rpx;
+}
+
+.subject-card.active .subject-icon {
+  transform: scale(1.1);
+}
+
+.subject-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subject-name {
+  font-size: 28rpx;
+  color: var(--practice-text-primary);
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.subject-desc {
+  font-size: 22rpx;
+  color: var(--practice-text-secondary);
+  text-align: center;
+}
+
+/* 智能推荐区域 */
+.recommendation-section {
+  margin-bottom: 50rpx;
+}
+
+.ai-badge {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--practice-primary), var(--practice-primary-light));
+  padding: 6rpx 12rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(14, 165, 233, 0.2);
+}
+
+.ai-icon {
+  font-size: 20rpx;
+  margin-right: 6rpx;
+}
+
+.ai-text {
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: 600;
+}
+
+.recommendation-card {
+  background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%);
+  border-radius: 24rpx;
+  padding: 30rpx;
+  border: 1px solid var(--practice-border);
+  box-shadow: var(--practice-shadow);
+  margin-top: 20rpx;
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.rec-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.rec-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--practice-text-primary);
+}
+
+.rec-content {
+  margin-bottom: 24rpx;
+}
+
+.rec-text {
+  font-size: 26rpx;
+  color: var(--practice-text-secondary);
+  line-height: 1.6;
+}
+
+.rec-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.rec-btn {
+  flex: 1;
+  padding: 16rpx 0;
+  border-radius: 16rpx;
+  text-align: center;
+  font-size: 26rpx;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.apply-btn {
+  background: var(--practice-primary);
+  color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(14, 165, 233, 0.3);
+}
+
+.apply-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 6rpx rgba(14, 165, 233, 0.2);
+}
+
+.skip-btn {
+  background: var(--practice-bg-section);
+  color: var(--practice-text-secondary);
+  border: 1px solid var(--practice-border);
+}
+
+.skip-btn:active {
+  background: #E0F2FE;
+}
+
+/* 快速设置按钮 */
+.preset-btn {
+  display: flex;
+  align-items: center;
+  background: var(--practice-bg-section);
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+  border: 1px solid var(--practice-border);
+  transition: all 0.3s ease;
+}
+
+.preset-btn:active {
+  background: #E0F2FE;
+  transform: scale(0.98);
+}
+
+.preset-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.preset-text {
+  font-size: 24rpx;
+  color: var(--practice-primary);
+  font-weight: 600;
+}
+
+/* 设置网格 */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.setting-card {
+  background: var(--practice-bg-card);
+  border-radius: 24rpx;
+  padding: 20rpx 30rpx;
+  box-shadow: var(--practice-shadow);
+  border: 1px solid var(--practice-border);
+  transition: all 0.3s ease;
+}
+
+.setting-card:active {
+  transform: scale(0.98);
+}
+
+.setting-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-header {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.setting-icon {
+  font-size: 32rpx;
+  margin-right: 16rpx;
+}
+
+.setting-info {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: 28rpx;
+  color: var(--practice-text-primary);
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.setting-value {
+  font-size: 24rpx;
+  color: var(--practice-text-secondary);
+}
+
+.setting-value.placeholder {
+  color: var(--practice-text-light);
+}
+
+.setting-arrow {
+  display: flex;
+  align-items: center;
+}
+
+.arrow-icon {
+  font-size: 24rpx;
+  color: var(--practice-text-light);
+  margin-left: 8rpx;
+}
+
+/* 题型下拉选择 */
+.setting-dropdown {
+  margin-top: 20rpx;
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+.dropdown-item {
+  padding: 12rpx 20rpx;
+  background: var(--practice-bg-section);
+  color: var(--practice-text-secondary);
+  font-size: 24rpx;
+  border-radius: 12rpx;
+  border: 1px solid var(--practice-border);
+  transition: all 0.3s ease;
+}
+
+.dropdown-item.active {
+  background: var(--practice-primary);
+  color: #fff;
+  border-color: var(--practice-primary);
+  box-shadow: 0 2rpx 8rpx rgba(14, 165, 233, 0.3);
+}
+
+.dropdown-item:active {
+  transform: scale(0.95);
+}
+
+.dropdown-text {
+  font-weight: 500;
+}
+
+/* 通用行样式 */
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+}
+
+.link-style:active {
+  opacity: 0.7;
+}
+
+.row-label {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: var(--text-main);
+}
+
+.row-label .icon {
+  margin-right: 16rpx;
+  font-size: 32rpx;
+}
+
+.row-value {
+  font-size: 28rpx;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+}
+
+.row-value.placeholder {
+  color: var(--text-sub);
+}
+
+.arrow {
+  margin-left: 10rpx;
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+.divider {
+  height: 1rpx;
+  background: #f5f5f5;
+  margin: 0 10rpx;
+}
+
+/* 题型块 */
+.setting-block {
+  padding: 30rpx 0;
+}
+
+.block-title {
+  font-size: 28rpx;
+  color: var(--text-sub);
+  margin-bottom: 20rpx;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.tag-item {
+  padding: 10rpx 24rpx;
+  background: #EFF4FF;
+  color: var(--text-main);
+  font-size: 26rpx;
+  border-radius: 12rpx;
+  transition: all 0.2s;
+}
+
+.tag-item.active {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 2rpx 8rpx rgba(74, 144, 226, 0.3);
+}
+
+/* 难度和数量行 */
+.setting-row-group {
+  display: flex;
+  padding: 30rpx 0;
+  border-top: 1rpx solid #f5f5f5;
+}
+
+.setting-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setting-col:first-child {
+  border-right: 1rpx solid #f5f5f5;
+}
+
+.col-label {
+  font-size: 26rpx;
+  color: var(--text-sub);
+  margin-bottom: 20rpx;
+}
+
+/* 难度滑块 */
+.difficulty-slider {
+  margin-top: 20rpx;
+}
+
+.difficulty-slider slider {
+  width: 100%;
+}
+
+.difficulty-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12rpx;
+}
+
+.diff-label {
+  font-size: 20rpx;
+  color: var(--practice-text-light);
+}
+
+/* 数量步进器 */
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20rpx;
+  background: var(--practice-bg-section);
+  border-radius: 16rpx;
+  padding: 8rpx;
+  border: 1px solid var(--practice-border);
+}
+
+.stepper-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: var(--practice-primary);
+  font-weight: bold;
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.stepper-btn:active {
+  background: rgba(14, 165, 233, 0.1);
+  transform: scale(0.9);
+}
+
+.stepper-btn.disabled {
+  color: var(--practice-text-light);
+  opacity: 0.5;
+}
+
+.stepper-value {
+  width: 80rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--practice-text-primary);
+}
+
+/* 学习目标 */
+.goals-section {
+  margin-bottom: 50rpx;
+}
+
+.goals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.goal-card {
+  background: var(--practice-bg-card);
+  border-radius: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--practice-shadow);
+  border: 1px solid var(--practice-border);
+  transition: all 0.3s ease;
+}
+
+.goal-card:active {
+  transform: scale(0.98);
+}
+
+.goal-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.goal-content {
+  flex: 1;
+}
+
+.goal-title {
+  font-size: 28rpx;
+  color: var(--practice-text-primary);
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.goal-desc {
+  font-size: 24rpx;
+  color: var(--practice-text-secondary);
+}
+
+.goal-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 120rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8rpx;
+  background: var(--practice-bg-section);
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--practice-primary), var(--practice-primary-light));
+  border-radius: 4rpx;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  font-size: 22rpx;
+  color: var(--practice-primary);
+  font-weight: 600;
+}
+
+/* 底部按钮区域 */
+.action-area {
+  padding: 40rpx 0 60rpx;
+}
+
+.start-btn {
+  width: 100% !important;
+  background: linear-gradient(135deg, var(--practice-primary) 0%, var(--practice-primary-dark) 100%);
+  color: #fff;
+  border-radius: 24rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+  box-shadow: 0 10rpx 30rpx rgba(14, 165, 233, 0.3);
+  border: none;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.start-btn::after {
+  border: none;
+}
+
+.start-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 6rpx 16rpx rgba(14, 165, 233, 0.2);
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-text {
+  font-weight: bold;
+}
+
+.btn-icon {
+  margin-left: 16rpx;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.icon-arrow {
+  font-size: 32rpx;
+  font-weight: normal;
+}
+
+.start-btn:active .btn-icon {
+  transform: translateX(6rpx);
+}
+
+/* 快速操作按钮 */
+.quick-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.quick-btn {
+  flex: 1;
+  background: var(--practice-bg-card);
+  border: 1px solid var(--practice-border);
+  border-radius: 20rpx;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--practice-shadow);
+  transition: all 0.3s ease;
+}
+
+.quick-btn:active {
+  transform: scale(0.98);
+  background: var(--practice-bg-section);
+}
+
+.quick-icon {
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+}
+
+.quick-text {
+  font-size: 24rpx;
+  color: var(--practice-text-secondary);
+  font-weight: 500;
+}

@@ -1,0 +1,73 @@
+<view class="container">
+  <view class="content">
+    <!-- 头部欢迎区 -->
+    <view class="header">
+      <view class="logo-box">
+        <text class="logo">🚀</text>
+      </view>
+      <view class="greeting">
+        <text class="title">欢迎加入！</text>
+        <text class="subtitle">创建一个账号，开始你的学习之旅</text>
+      </view>
+    </view>
+
+    <!-- 注册卡片 -->
+    <view class="card">
+      <view class="tab-header">
+        <view class="tab-item {{registerType === 'phone' ? 'active' : ''}}" bindtap="switchRegisterType" data-type="phone">手机号注册</view>
+        <view class="tab-item {{registerType === 'email' ? 'active' : ''}}" bindtap="switchRegisterType" data-type="email">邮箱注册</view>
+      </view>
+
+      <view class="form-group">
+        <!-- 手机/邮箱输入 -->
+        <view class="input-wrapper" wx:if="{{registerType === 'phone'}}">
+          <view class="icon">📱</view>
+          <input class="input-field" type="number" placeholder="请输入手机号" placeholder-class="placeholder" value="{{phone}}" bindinput="onPhoneInput" />
+        </view>
+
+        <view class="input-wrapper" wx:if="{{registerType === 'email'}}">
+          <view class="icon">📧</view>
+          <input class="input-field" type="text" placeholder="请输入邮箱地址" placeholder-class="placeholder" value="{{email}}" bindinput="onEmailInput" />
+        </view>
+
+        <!-- 昵称 -->
+        <view class="input-wrapper">
+          <view class="icon">👤</view>
+          <input class="input-field" type="text" placeholder="请输入昵称" placeholder-class="placeholder" value="{{nickname}}" bindinput="onNicknameInput" />
+        </view>
+        
+        <!-- 验证码 -->
+        <view class="input-wrapper code-wrapper">
+          <view class="icon">📨</view>
+          <input class="input-field" type="number" placeholder="请输入验证码" placeholder-class="placeholder" value="{{code}}" bindinput="onCodeInput" />
+          <view class="code-btn {{counting ? 'disabled' : ''}}" bindtap="sendCode">{{counting ? count + 's后重发' : '获取验证码'}}</view>
+        </view>
+
+        <!-- 密码 -->
+        <view class="input-wrapper">
+          <view class="icon">🔑</view>
+          <input class="input-field password-input" type="{{showPassword ? 'text' : 'password'}}" placeholder="设置登录密码" placeholder-class="placeholder" value="{{password}}" bindinput="onPasswordInput" />
+          <view class="password-toggle" bindtap="togglePasswordVisibility">
+            <text class="toggle-icon">{{showPassword ? '👁️' : '🙈'}}</text>
+          </view>
+        </view>
+
+        <!-- 确认密码 -->
+        <view class="input-wrapper">
+          <view class="icon">🔐</view>
+          <input class="input-field password-input" type="{{showConfirmPassword ? 'text' : 'password'}}" placeholder="确认登录密码" placeholder-class="placeholder" value="{{confirmPassword}}" bindinput="onConfirmPasswordInput" />
+          <view class="password-toggle" bindtap="toggleConfirmPasswordVisibility">
+            <text class="toggle-icon">{{showConfirmPassword ? '👁️' : '🙈'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <button class="submit-btn" bindtap="handleRegister" loading="{{loading}}">立即注册</button>
+
+      <view class="footer-links">
+        <text class="text">已有账号？</text>
+        <text class="link" bindtap="goToLogin">去登录</text>
+      </view>
+    </view>
+  </view>
+</view>

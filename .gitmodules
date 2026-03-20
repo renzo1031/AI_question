@@ -1,9 +1,0 @@
-[submodule "backend"]
-	path = backend
-	url = https://github.com/peng1031/Smart-knowledge.git
-[submodule "backend_front"]
-	path = backend_front
-	url = https://github.com/peng1031/Smart_knowledge_backend_front.git
-[submodule "front"]
-	path = front
-	url = https://github.com/peng1031/Smart-knowledge-front.git

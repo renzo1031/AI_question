@@ -1,0 +1,138 @@
+<view class="container">
+  <!-- 轮播图区域 (作为背景) -->
+  <view class="banner-section" wx:if="{{banners.length > 0}}">
+    <swiper class="banner-swiper" autoplay circular interval="{{bannerInterval}}" indicator-dots="{{false}}" bindchange="onBannerChange">
+      <swiper-item wx:for="{{banners}}" wx:key="id" bindtap="handleBannerTap" data-item="{{item}}">
+        <image class="banner-image" src="{{item.image_url}}" mode="aspectFill"></image>
+        <!-- 渐变遮罩层 (用于文字) -->
+        <view class="banner-overlay"></view>
+      </swiper-item>
+    </swiper>
+    <!-- 底部渐变过渡层 -->
+    <view class="banner-fade-mask"></view>
+  </view>
+  <!-- 无轮播图时的默认背景 -->
+  <view class="banner-placeholder" wx:else>
+    <view class="banner-fade-mask"></view>
+  </view>
+
+  <!-- 顶部导航栏占位 -->
+  <view class="nav-placeholder" style="height: {{navHeight}}px;"></view>
+
+  <!-- 顶部用户信息区 -->
+  <view class="header-content">
+    <view class="user-info">
+      <view class="avatar-box">
+        <image class="avatar" src="{{userInfo.avatar || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="text-box">
+        <view class="nickname">Hi, {{userInfo.nickname || '同学'}} <text class="wave">👋</text></view>
+        <view class="subtitle">今天也要加油哦！✨</view>
+      </view>
+    </view>
+    
+    <!-- 学习数据卡片 -->
+    <view class="stats-card">
+      <view class="stat-item">
+        <text class="stat-num">{{overview.total_study_days || 0}}</text>
+        <text class="stat-label">坚持天数</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{overview.total_questions || 0}}</text>
+        <text class="stat-label">刷题总数</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 公告栏 -->
+  <view class="announcement-section" wx:if="{{announcements.length > 0}}" bindtap="showCurrentAnnouncement">
+    <view class="announcement-bar">
+      <view class="announcement-icon">📢</view>
+      <swiper class="announcement-swiper" vertical autoplay circular interval="4000" bindchange="onAnnouncementChange">
+        <swiper-item wx:for="{{announcements}}" wx:key="id" class="announcement-item">
+          <text class="announcement-text">{{item.title}}</text>
+        </swiper-item>
+      </swiper>
+      <text class="arrow-icon">❯</text>
+    </view>
+  </view>
+
+  <!-- 核心功能区：夸克风拍照搜题 -->
+  <view class="quark-scan-wrapper" bindtap="handleScan">
+    <view class="quark-scan-card">
+      <view class="scan-left">
+        <view class="scan-title-row">
+          <text class="scan-title">拍照搜题</text>
+          <view class="scan-tag">AI 智能解题</view>
+        </view>
+        <text class="scan-desc">遇到难题拍一拍，秒出解析</text>
+      </view>
+      <view class="scan-right">
+        <view class="scan-btn-circle">
+          <view class="camera-lens">
+            <view class="lens-inner"></view>
+            <view class="scan-line-anim"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习详情卡片 -->
+  <view class="detail-stats-card" wx:if="{{overview.data_sufficient}}">
+    <view class="detail-stat-row">
+      <view class="detail-stat-item wide">
+        <view class="detail-stat-header">
+          <text class="detail-stat-label">最近10题正确率</text>
+          <text class="detail-stat-value accuracy">{{overview.last_10_accuracy_formatted || overview.last_10_accuracy + '%'}}</text>
+        </view>
+        <view class="detail-stat-bar">
+          <view class="detail-stat-bar-fill" style="width: {{overview.last_10_accuracy || 0}}%; background-color: {{accuracyBarColor}};"></view>
+        </view>
+        <text class="detail-stat-desc">{{overview.last_10_accuracy_level || '继续努力'}}</text>
+      </view>
+    </view>
+    <view class="detail-stat-row">
+      <view class="detail-stat-item">
+        <text class="detail-stat-label">今日答题</text>
+        <text class="detail-stat-value">{{overview.today_questions || 0}}</text>
+      </view>
+      <view class="detail-stat-item">
+        <text class="detail-stat-label">近7天答题</text>
+        <text class="detail-stat-value">{{overview.recent_7_days_questions || 0}}</text>
+      </view>
+      <view class="detail-stat-item">
+        <text class="detail-stat-label">学习趋势</text>
+        <text class="detail-stat-value trend-{{overview.trend_direction || 'stable'}}">
+          {{overview.trend_direction === 'up' ? '进步中 📈' : overview.trend_direction === 'down' ? '需加油 📉' : '保持稳定 ➡️'}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据不足提示 -->
+  <view class="data-insufficient-card" wx:if="{{!overview.data_sufficient && overview.total_questions > 0}}">
+    <text class="insufficient-icon">📝</text>
+    <text class="insufficient-text">数据不足，多刷题后解锁学习分析</text>
+  </view>
+
+  <!-- 功能快捷入口 -->
+  <view class="feature-section">
+    <view class="section-header">
+      <text class="section-title">常用功能</text>
+    </view>
+    <view class="feature-grid">
+      <view class="grid-item" wx:for="{{featureGrid}}" wx:key="id" bindtap="handleGridTap" data-item="{{item}}">
+        <view class="icon-box" style="background-color: {{item.color}}15">
+          <image wx:if="{{item.icon}}" src="{{item.icon}}" class="grid-icon"></image>
+          <text wx:else class="grid-emoji">{{item.emoji}}</text>
+        </view>
+        <text class="grid-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-placeholder"></view>
+</view>

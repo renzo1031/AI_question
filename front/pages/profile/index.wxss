@@ -1,0 +1,340 @@
+page {
+  background-color: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft YaHei", sans-serif;
+  
+  /* 个人中心专用配色 - 极淡天空蓝主题 */
+  --profile-primary: #0EA5E9;
+  --profile-primary-light: #38BDF8;
+  --profile-text-primary: #1E293B;
+  --profile-text-secondary: #475569;
+  --profile-text-light: #64748B;
+  --profile-bg-card: #FFFFFF;
+  --profile-bg-section: #F0F9FF;
+  --profile-border: #E0F2FE;
+  --profile-shadow: 0 4rpx 20rpx rgba(14, 165, 233, 0.08);
+}
+
+.container {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部背景 */
+.header-bg {
+  width: 100%;
+  height: 400rpx;
+  background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 50%, var(--color-bg) 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.header-title-area {
+  padding-left: 32rpx;
+  display: flex;
+}
+
+.header-title {
+  margin-top: 10rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--profile-text-primary);
+  letter-spacing: 1rpx;
+}
+
+/* 内容区域 */
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  margin-top: -200rpx;
+  padding: 0 32rpx;
+  padding-bottom: 40rpx;
+}
+
+/* 用户卡片 - 现代化设计 */
+.user-card {
+  background: var(--profile-bg-card);
+  border-radius: 32rpx;
+  padding: 40rpx 32rpx;
+  box-shadow: var(--profile-shadow);
+  border: 1px solid var(--profile-border);
+  margin-bottom: 32rpx;
+  transition: all 0.3s ease;
+}
+
+.user-card:active {
+  transform: scale(0.98);
+}
+
+.user-card-top {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-box {
+  margin-right: 32rpx;
+  position: relative;
+}
+
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  border: 4rpx solid #FFFFFF;
+  background: var(--profile-bg-section);
+  box-shadow: 0 4rpx 12rpx rgba(14, 165, 233, 0.15);
+}
+
+.info-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nickname-large {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--profile-text-primary);
+  margin-bottom: 8rpx;
+}
+
+.desc-text {
+  font-size: 26rpx;
+  color: var(--profile-text-secondary);
+}
+
+.nickname-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.vip-tag {
+  background: #333;
+  color: #FFD700;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 8rpx;
+  margin-left: 12rpx;
+  font-weight: 600;
+}
+
+.account-text {
+  font-size: 24rpx;
+  color: var(--profile-text-secondary);
+  margin-bottom: 4rpx;
+}
+
+.time-text {
+  font-size: 24rpx;
+  color: var(--profile-text-light);
+}
+
+.edit-btn {
+  padding: 12rpx 28rpx;
+  background: var(--profile-bg-section);
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  color: var(--profile-primary);
+  font-weight: 600;
+  border: 1px solid var(--profile-border);
+  transition: all 0.3s ease;
+}
+
+.edit-btn:active {
+  background: #E0F2FE;
+}
+
+/* 学习数据统计 */
+.user-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32rpx;
+  padding-top: 32rpx;
+  border-top: 1px dashed var(--profile-border);
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-num {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--profile-text-primary);
+  margin-bottom: 8rpx;
+  font-family: 'DIN Alternate', -apple-system, sans-serif;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: var(--profile-text-secondary);
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 40rpx;
+  background: var(--profile-border);
+}
+
+/* 通用板块卡片 - 现代化设计 */
+.section-card {
+  background: var(--profile-bg-card);
+  border-radius: 28rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: var(--profile-shadow);
+  border: 1px solid var(--profile-border);
+}
+
+.section-header {
+  padding: 24rpx 32rpx 0;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--profile-text-primary);
+  position: relative;
+  padding-left: 16rpx;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 28rpx;
+  background: linear-gradient(180deg, var(--profile-primary) 0%, var(--profile-primary-light) 100%);
+  border-radius: 4rpx;
+}
+
+/* 宫格菜单 */
+.grid-menu {
+  padding: 32rpx 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-icon-circle {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+  font-size: 40rpx;
+}
+
+/* 柔和的现代配色 */
+.color-yellow-bg { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+.color-blue-bg { background: rgba(14, 165, 233, 0.1); color: #0EA5E9; }
+.color-green-bg { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+.color-purple-bg { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; }
+
+.grid-text {
+  font-size: 24rpx;
+  color: var(--profile-text-secondary);
+  font-weight: 500;
+}
+
+/* 列表菜单 */
+.list-menu {
+  /* padding: 0 32rpx; */
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1px solid var(--profile-border);
+  transition: background-color 0.2s;
+}
+
+.list-item:active {
+  background-color: var(--profile-bg-section);
+}
+
+.list-item:last-child {
+  border-bottom: none;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-icon {
+  font-size: 32rpx;
+  margin-right: 24rpx;
+  width: 40rpx;
+  text-align: center;
+}
+
+.item-text {
+  font-size: 28rpx;
+  color: var(--profile-text-primary);
+  font-weight: 500;
+}
+
+.item-arrow {
+  font-size: 24rpx;
+  color: var(--profile-text-light);
+  font-family: monospace;
+}
+
+/* 退出登录 */
+.logout-area {
+  margin-top: 40rpx;
+}
+
+.btn-logout {
+  width: 100%;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--profile-bg-card);
+  color: #EF4444;
+  font-size: 32rpx;
+  font-weight: 600;
+  border-radius: 48rpx;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  box-shadow: 0 8rpx 24rpx rgba(239, 68, 68, 0.08);
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:active {
+  transform: scale(0.98);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.btn-logout::after {
+  border: none;
+}
+
+.version-text {
+  text-align: center;
+  font-size: 22rpx;
+  color: var(--profile-text-light);
+  margin-top: 24rpx;
+  font-weight: 500;
+}

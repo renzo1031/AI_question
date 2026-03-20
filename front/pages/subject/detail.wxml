@@ -1,0 +1,54 @@
+<view class="container">
+  <!-- 学科头部 -->
+  <view class="header-card" wx:if="{{subject}}">
+    <view class="subject-title">{{subject.name}}</view>
+    <view class="mastery-row">
+      <text class="label">综合掌握度</text>
+      <text class="value">{{subject.mastery}}%</text>
+    </view>
+    <view class="progress-bg">
+      <view class="progress-bar" style="width: {{subject.mastery}}%;"></view>
+    </view>
+    <view class="action-btn" bindtap="startSubjectPractice">
+      <text>综合练习</text>
+    </view>
+  </view>
+
+  <!-- 知识点树 -->
+  <view class="knowledge-tree">
+    <view class="section-title">知识点图谱</view>
+    
+    <block wx:if="{{knowledgeTree.length > 0}}">
+      <view class="chapter-item" wx:for="{{knowledgeTree}}" wx:key="id" wx:for-item="chapter">
+        <view class="chapter-header" bindtap="toggleChapter" data-index="{{index}}">
+          <view class="chapter-info">
+            <text class="chapter-name">{{chapter.name}}</text>
+            <text class="chapter-progress">{{chapter.mastery}}%</text>
+          </view>
+          <text class="arrow {{chapter.expanded ? 'expanded' : ''}}">></text>
+        </view>
+        
+        <view class="points-list" wx:if="{{chapter.expanded}}">
+          <view class="point-item" wx:for="{{chapter.children}}" wx:key="id" wx:for-item="point">
+            <view class="point-info">
+              <text class="point-name">{{point.name}}</text>
+              <view class="point-status">
+                <view class="mini-progress">
+                  <view class="mini-bar" style="width: {{point.mastery}}%;"></view>
+                </view>
+                <text class="point-score">{{point.mastery}}%</text>
+              </view>
+            </view>
+            <view class="practice-btn" bindtap="startPointPractice" data-id="{{point.id}}" data-name="{{point.name}}">
+              练习
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <view class="empty-state" wx:else>
+      <text>加载中或暂无知识点...</text>
+    </view>
+  </view>
+</view>

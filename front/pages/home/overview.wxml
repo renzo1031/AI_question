@@ -1,0 +1,101 @@
+<!-- 学习概览页面 -->
+<view class="page-container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <text class="username">{{userInfo.nickName || '未登录'}}</text>
+        <text class="study-time">今日学习: {{todayStudyTime}}分钟</text>
+      </view>
+    </view>
+    <view class="user-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.totalDays}}</text>
+        <text class="stat-label">累计天数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.totalQuestions}}</text>
+        <text class="stat-label">解题总数</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{userStats.accuracy}}%</text>
+        <text class="stat-label">正确率</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习数据概览 -->
+  <t-card title="学习数据概览" class="data-card">
+    <view class="chart-container">
+      <view class="chart-title">本周学习时长</view>
+      <view class="week-chart">
+        <view class="chart-bar-container">
+          <view class="chart-bar" wx:for="{{weekData}}" wx:key="day" style="height: {{item.height}}px; background-color: {{item.color}};">
+            <view class="bar-label">{{item.label}}</view>
+          </view>
+        </view>
+        <view class="chart-legend">
+          <view class="legend-item">
+            <view class="legend-color" style="background-color: var(--td-brand-color);"></view>
+            <text>学习时长</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </t-card>
+
+  <!-- 学科进度 -->
+  <t-card title="学科进度" class="progress-card">
+    <view class="subject-progress" wx:for="{{subjectProgress}}" wx:key="subject">
+      <view class="progress-header">
+        <text class="subject-name">{{item.subject}}</text>
+        <text class="progress-percent">{{item.progress}}%</text>
+      </view>
+      <t-progress percentage="{{item.progress}}" strokeWidth="8" trackColor="#f0f0f0" />
+    </view>
+  </t-card>
+
+  <!-- 今日任务 -->
+  <t-card title="今日任务" class="task-card">
+    <view class="task-list">
+      <view class="task-item" wx:for="{{todayTasks}}" wx:key="id">
+        <view class="task-info">
+          <view class="task-title">{{item.title}}</view>
+          <view class="task-desc">{{item.description}}</view>
+        </view>
+        <view class="task-status">
+          <t-badge wx:if="{{item.status === 'completed'}}" count="已完成" color="var(--td-success-color)"></t-badge>
+          <t-badge wx:elif="{{item.status === 'inProgress'}}" count="进行中" color="var(--td-warning-color)"></t-badge>
+          <t-badge wx:else count="未开始" color="var(--td-text-color-placeholder)"></t-badge>
+        </view>
+      </view>
+    </view>
+    <view class="task-more">
+      <t-button size="small" variant="outline" bindtap="goToTasks">查看全部任务</t-button>
+    </view>
+  </t-card>
+
+  <!-- 快捷入口 -->
+  <t-card title="快捷入口" class="shortcut-card">
+    <t-grid column="4">
+      <t-grid-item text="文本解题" icon="edit-1" bindtap="goToTextSolve" />
+      <t-grid-item text="拍照解题" icon="camera" bindtap="goToPhotoSolve" />
+      <t-grid-item text="智能练习" icon="lightbulb" bindtap="goToSmartPractice" />
+      <t-grid-item text="错题本" icon="error-circle" bindtap="goToWrongQuestions" />
+    </t-grid>
+  </t-card>
+
+  <!-- 学习建议 -->
+  <t-card title="学习建议" class="suggestion-card">
+    <view class="suggestion-list">
+      <view class="suggestion-item" wx:for="{{suggestions}}" wx:key="id">
+        <t-icon name="lightbulb" color="var(--td-warning-color)" size="20"></t-icon>
+        <text class="suggestion-text">{{item.content}}</text>
+      </view>
+    </view>
+  </t-card>
+
+  <!-- 加载状态 -->
+  <t-loading wx:if="{{loading}}" theme="circular" text="加载中..." />
+</view>

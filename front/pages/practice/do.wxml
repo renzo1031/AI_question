@@ -1,0 +1,138 @@
+<view class="container">
+  <!-- 顶部栏 -->
+  <view class="top-bar">
+    <view class="timer">
+      <text class="icon">⏰</text>
+      <text>{{timeString}}</text>
+    </view>
+    <view class="progress">
+      <text class="current">{{currentIndex + 1}}</text>
+      <text class="total">/{{questions.length}}</text>
+    </view>
+    <view class="card-btn" bindtap="toggleCard">
+      <text>答题卡</text>
+    </view>
+  </view>
+
+  <!-- 题目区域 -->
+  <swiper class="question-swiper" current="{{currentIndex}}" bindchange="onSwiperChange" duration="300">
+    <swiper-item wx:for="{{questions}}" wx:key="id" wx:for-item="q" wx:for-index="idx">
+      <scroll-view scroll-y class="question-scroll" show-scrollbar="{{false}}">
+        <view class="question-card">
+          <!-- 题干 -->
+          <view class="question-header">
+            <view class="question-type">{{q.type_text}}</view>
+            <view class="question-title">
+              <rich-text nodes="{{q.renderedContent}}"></rich-text>
+            </view>
+          </view>
+
+          <!-- 选项区域 (根据题型渲染) -->
+          
+          <!-- 1. 选择题 (有选项) -->
+          <view class="options-list" wx:if="{{(q.type === 'single' || q.type === 'multiple') && q.options.length > 0}}">
+            <view 
+              class="option-item {{item.selected ? 'selected' : ''}} {{showResult && item.is_correct ? 'correct' : ''}} {{showResult && item.selected && !item.is_correct ? 'wrong' : ''}}" 
+              wx:for="{{q.options}}" 
+              wx:key="key"
+              bindtap="selectOption"
+              data-qidx="{{idx}}"
+              data-oidx="{{index}}"
+              data-disabled="{{showResult}}"
+            >
+              <view class="option-label">{{item.key}}</view>
+              <view class="option-text">
+                <rich-text nodes="{{item.renderedContent}}"></rich-text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 2. 选择题 (无选项，降级提示) -->
+          <view class="no-options" wx:if="{{(q.type === 'single' || q.type === 'multiple') && q.options.length === 0}}">
+            <text class="tip-text">该选择题暂无选项数据，请直接查看解析。</text>
+          </view>
+
+          <!-- 3. 判断题 -->
+          <view class="boolean-options" wx:if="{{q.type === 'boolean'}}">
+            <view 
+              class="boolean-btn {{q.user_answer === '正确' ? 'selected-true' : ''}} {{showResult && q.correct_answer === '正确' ? 'correct' : ''}} {{showResult && q.user_answer === '正确' && q.correct_answer !== '正确' ? 'wrong' : ''}}"
+              bindtap="selectBoolean"
+              data-qidx="{{idx}}"
+              data-value="正确"
+            >
+              <text class="icon">✓</text>
+              <text>正确</text>
+            </view>
+            <view 
+              class="boolean-btn {{q.user_answer === '错误' ? 'selected-false' : ''}} {{showResult && q.correct_answer === '错误' ? 'correct' : ''}} {{showResult && q.user_answer === '错误' && q.correct_answer !== '错误' ? 'wrong' : ''}}"
+              bindtap="selectBoolean"
+              data-qidx="{{idx}}"
+              data-value="错误"
+            >
+              <text class="icon">✗</text>
+              <text>错误</text>
+            </view>
+          </view>
+
+          <!-- 4. 填空题 -->
+          <view class="fill-input-box" wx:if="{{q.type === 'fill'}}">
+             <textarea 
+               class="fill-textarea {{showResult ? 'disabled' : ''}}" 
+               placeholder="请输入你的答案..." 
+               bindinput="onInputAnswer" 
+               data-qidx="{{idx}}"
+               value="{{q.user_answer}}"
+               disabled="{{showResult}}"
+               maxlength="200"
+             />
+          </view>
+
+          <!-- 解析 (提交后显示) -->
+          <view class="analysis-box" wx:if="{{showResult}}">
+            <view class="analysis-title">答案解析</view>
+            <view class="result-row">
+              <text>正确答案：<text class="green">{{q.correct_answer}}</text></text>
+              <text>你的答案：<text class="{{q.is_correct ? 'green' : 'red'}}">{{q.user_answer || '未作答'}}</text></text>
+            </view>
+            <view class="analysis-content">
+              <rich-text nodes="{{q.renderedAnalysis}}"></rich-text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="action-btn {{currentIndex === 0 ? 'disabled' : ''}}" bindtap="prevQuestion">上一题</view>
+    
+    <view class="action-btn primary" bindtap="nextOrSubmit" wx:if="{{!showResult}}">
+      {{currentIndex === questions.length - 1 ? '提交试卷' : '下一题'}}
+    </view>
+    <view class="action-btn primary" bindtap="goBack" wx:else>
+      返回列表
+    </view>
+  </view>
+
+  <!-- 答题卡弹窗 -->
+  <view class="card-modal {{showCard ? 'show' : ''}}" bindtap="toggleCard">
+    <view class="card-content" catchtap="stopProp">
+      <view class="card-header">
+        <text>答题卡</text>
+        <text class="close-btn" bindtap="toggleCard">×</text>
+      </view>
+      <view class="card-grid">
+        <view 
+          class="card-item {{item.user_answer ? 'answered' : ''}} {{currentIndex === index ? 'active' : ''}}" 
+          wx:for="{{questions}}" 
+          wx:key="id"
+          bindtap="jumpToQuestion"
+          data-index="{{index}}"
+        >
+          {{index + 1}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

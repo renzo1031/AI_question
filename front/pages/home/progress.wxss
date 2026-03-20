@@ -1,0 +1,212 @@
+/* pages/home/progress.wxss */
+.progress-container {
+  padding: 0 24rpx 24rpx;
+  background-color: var(--td-bg-color-page);
+  min-height: 100vh;
+}
+
+/* 加载状态样式 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120rpx 0;
+}
+
+/* 总体进度样式 */
+.overall-progress {
+  margin-bottom: 24rpx;
+}
+
+.overall-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: var(--td-font-size-title-large);
+  font-weight: 600;
+  color: var(--td-brand-color);
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: var(--td-font-size-body-small);
+  color: var(--td-text-color-secondary);
+}
+
+.overall-progress-bar {
+  margin-top: 16rpx;
+}
+
+/* 进度标签页样式 */
+.progress-tabs {
+  margin-top: 24rpx;
+}
+
+.tab-content {
+  margin-top: 24rpx;
+}
+
+/* 科目进度样式 */
+.progress-list {
+  margin-top: 24rpx;
+}
+
+.progress-item {
+  margin-bottom: 24rpx;
+  border-radius: var(--td-radius-large);
+}
+
+.progress-item:last-child {
+  margin-bottom: 0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.progress-title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.title-text {
+  font-size: var(--td-font-size-title-medium);
+  font-weight: 600;
+  color: var(--td-text-color-primary);
+  margin-left: 12rpx;
+}
+
+.progress-percentage {
+  font-size: var(--td-font-size-title-medium);
+  font-weight: 600;
+  color: var(--td-brand-color);
+}
+
+.progress-bar {
+  margin-bottom: 16rpx;
+}
+
+.progress-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  font-size: var(--td-font-size-body-small);
+  color: var(--td-text-color-secondary);
+}
+
+.detail-item .t-icon {
+  margin-right: 6rpx;
+}
+
+.progress-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 章节进度样式 */
+.chapter-list {
+  margin-top: 24rpx;
+}
+
+.chapter-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 120rpx;
+}
+
+.progress-text {
+  font-size: var(--td-font-size-body-small);
+  color: var(--td-text-color-secondary);
+  margin-top: 4rpx;
+  text-align: right;
+}
+
+/* 知识点进度样式 */
+.knowledge-list {
+  margin-top: 24rpx;
+}
+
+.knowledge-item {
+  margin-bottom: 24rpx;
+  border-radius: var(--td-radius-large);
+}
+
+.knowledge-item:last-child {
+  margin-bottom: 0;
+}
+
+.knowledge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.knowledge-title {
+  font-size: var(--td-font-size-title-medium);
+  font-weight: 600;
+  color: var(--td-text-color-primary);
+  flex: 1;
+  margin-right: 16rpx;
+}
+
+.knowledge-mastery {
+  flex-shrink: 0;
+}
+
+.knowledge-progress {
+  margin-bottom: 16rpx;
+}
+
+.knowledge-details {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16rpx;
+}
+
+.knowledge-details .detail-item {
+  margin-bottom: 8rpx;
+}
+
+.knowledge-details .detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.knowledge-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.knowledge-actions .t-button {
+  margin-left: 16rpx;
+}
+
+.knowledge-actions .t-button:first-child {
+  margin-left: 0;
+}
+
+/* 空状态样式 */
+.empty-container {
+  padding: 120rpx 0;
+  text-align: center;
+}

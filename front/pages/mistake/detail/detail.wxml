@@ -1,0 +1,70 @@
+<view class="container" wx:if="{{mistake}}">
+  <!-- 题目卡片 -->
+  <view class="card question-card">
+    <view class="card-header">
+      <view class="tags">
+        <text class="tag subject">{{mistake.question.tags[0]}}</text>
+        <text class="tag type">{{mistake.question.question_type}}</text>
+      </view>
+      <view class="difficulty">难度：Lv.{{mistake.question.difficulty}}</view>
+    </view>
+    <view class="card-content">
+      <rich-text nodes="{{renderedQuestion}}"></rich-text>
+    </view>
+  </view>
+
+  <!-- 上次错误答案 -->
+  <view class="card last-answer-card">
+    <view class="section-title">上次错误答案</view>
+    <view class="answer-content {{mistake.last_answer ? '' : 'empty'}}">
+      {{mistake.last_answer || '暂无记录'}}
+    </view>
+  </view>
+
+  <!-- AI 解析 -->
+  <view class="card ai-card">
+    <view class="section-title ai-title">
+      <text class="icon">✨</text>
+      AI 智能解析
+      <view class="ai-provider" wx:if="{{aiProvider}}">{{aiProvider}}</view>
+    </view>
+    
+    <view class="loading-wrapper" wx:if="{{loading}}">
+      <view class="loading-icon"></view>
+      <text>AI 正在全力思考中...</text>
+    </view>
+
+    <view class="ai-content" wx:elif="{{aiResult}}">
+      <view class="ai-answer-section">
+        <view class="sub-title">正确答案</view>
+        <view class="answer-box">
+          <rich-text nodes="{{renderedAnswer}}"></rich-text>
+        </view>
+      </view>
+
+      <view class="ai-analysis-section" wx:if="{{aiResult.analysis}}">
+        <view class="sub-title">题目解析</view>
+        <view class="analysis-box">
+          <rich-text nodes="{{renderedAnalysis}}"></rich-text>
+        </view>
+      </view>
+
+      <view class="ai-options-section" wx:if="{{aiResult.options && aiResult.options.length > 0}}">
+        <view class="sub-title">选项详情</view>
+        <view class="options-grid">
+          <view class="option-item" wx:for="{{aiResult.options}}" wx:key="index">
+            <text class="option-label">{{item.label}}.</text>
+            <view class="option-text">
+              <rich-text nodes="{{item.renderedContent}}"></rich-text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="error-wrapper" wx:elif="{{error}}">
+      <text class="error-msg">{{error}}</text>
+      <button class="retry-btn" bindtap="solveQuestion">重新获取解析</button>
+    </view>
+  </view>
+</view>

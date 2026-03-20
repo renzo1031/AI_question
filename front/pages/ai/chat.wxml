@@ -1,0 +1,90 @@
+<view class="container">
+  <!-- 顶部服务商切换 -->
+  <view class="header" bindtap="showProviderSheet">
+    <view class="provider-info">
+      <text class="label">当前模型：</text>
+      <text class="name">{{currentModelName || '自动选择'}}</text>
+      <text class="arrow">▼</text>
+    </view>
+    <view class="history-btn" catchtap="goToHistory">
+      <text>历史记录</text>
+    </view>
+  </view>
+
+  <!-- 聊天区域 -->
+  <scroll-view 
+    class="chat-list" 
+    scroll-y 
+    show-scrollbar="{{false}}"
+    scroll-into-view="{{scrollIntoView}}"
+    scroll-with-animation
+    bindtap="closeTools"
+  >
+    <view class="message-item {{item.role === 'user' ? 'user' : 'ai'}}" wx:for="{{messages}}" wx:key="id" id="msg-{{index}}">
+      <view class="avatar">
+        <image src="{{item.role === 'user' ? (userInfo.avatar || '/images/default_avatar.png') : '/images/ai_avatar.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="content">
+        <!-- 加载动画（位于气泡上方/内容之前） -->
+        <view class="thinking-indicator" wx:if="{{item.role === 'assistant' && !item.content && loading}}">
+           <view class="dot"></view>
+           <view class="dot"></view>
+           <view class="dot"></view>
+        </view>
+        <view class="bubble" wx:if="{{item.content}}">
+          <rich-text nodes="{{item.htmlContent}}" user-select></rich-text>
+        </view>
+        <!-- AI 消息下方的快捷操作按钮 -->
+        <view class="actions" wx:if="{{item.role === 'assistant' && item.question_id}}">
+          <view class="action-btn" bindtap="handleAction" data-type="hint" data-qid="{{item.question_id}}">💡 提示</view>
+          <view class="action-btn" bindtap="handleAction" data-type="similar" data-qid="{{item.question_id}}">📝 相似题</view>
+        </view>
+      </view>
+    </view>
+    
+    <view style="height: 220rpx;"></view>
+  </scroll-view>
+
+  <!-- 底部输入区 -->
+  <view class="footer">
+    <!-- 模型选择条 -->
+    <picker mode="selector" range="{{allModelOptions}}" range-key="name" value="{{currentModelIndex}}" bindchange="onModelChange">
+      <view class="model-bar">
+        <view class="model-tag">
+          <text class="label">正在使用</text>
+          <text class="name">{{currentModelName || '自动选择'}}</text>
+          <text class="arrow">切换 ></text>
+        </view>
+      </view>
+    </picker>
+
+    <view class="input-area">
+      <view class="tool-btn" bindtap="toggleTools">
+        <text class="plus">+</text>
+      </view>
+      <input 
+        class="input-box" 
+        value="{{inputValue}}" 
+        bindinput="onInput" 
+        bindconfirm="sendMessage" 
+        placeholder="请输入问题或知识点..." 
+        confirm-type="send"
+        adjust-position="{{true}}"
+        cursor-spacing="20"
+      />
+      <view class="send-btn {{inputValue ? 'active' : ''}}" bindtap="sendMessage">发送</view>
+    </view>
+
+    <!-- 底部工具栏 -->
+    <view class="tools-panel" wx:if="{{showTools}}">
+      <view class="tool-item" bindtap="selectMode" data-mode="explain">
+        <view class="icon">📖</view>
+        <text>知识讲解</text>
+      </view>
+      <view class="tool-item" bindtap="selectMode" data-mode="solve">
+        <view class="icon">✏️</view>
+        <text>AI解题</text>
+      </view>
+    </view>
+  </view>
+</view>

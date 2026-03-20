@@ -1,0 +1,263 @@
+page {
+  background-color: var(--color-bg);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft YaHei", sans-serif;
+  
+  /* 登录页面专用配色 - 天空蓝主题 */
+  --login-primary: #0EA5E9;        /* 天空蓝主色 */
+  --login-primary-light: #38BDF8;  /* 浅天空蓝 */
+  --login-primary-dark: #0284C7;   /* 深天空蓝 */
+  --login-text-primary: #1E293B;   /* 更深的蓝灰色文字 */
+  --login-text-secondary: #475569; /* 次要文字调整为中等深度 */
+  --login-text-light: #64748B;     /* 浅色文字保持 */
+  --login-input-bg: #F0F9FF;       /* 极淡蓝输入框 */
+  --login-border: #BAE6FD;         /* 淡蓝边框 */
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-image: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%);
+}
+
+.content {
+  padding: 40rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 头部 */
+.header {
+  margin-bottom: 60rpx;
+  text-align: center;
+}
+
+.logo-box {
+  width: 120rpx;
+  height: 120rpx;
+  background: #ffffff;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30rpx;
+  box-shadow: var(--shadow-md);
+}
+
+.logo {
+  font-size: 64rpx;
+}
+
+.greeting .title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--login-text-primary);
+  margin-bottom: 16rpx;
+}
+
+.greeting .subtitle {
+  font-size: 30rpx;
+  color: var(--login-text-secondary);
+}
+
+/* 卡片 */
+.card {
+  background: var(--color-surface);
+  border-radius: 40rpx;
+  padding: 50rpx 40rpx;
+  box-shadow: var(--shadow-lg);
+}
+
+.tab-header {
+  display: flex;
+  margin-bottom: 50rpx;
+  border-bottom: 2rpx solid var(--td-border-color);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 30rpx;
+  color: var(--login-text-light);
+  position: relative;
+}
+
+.tab-item.active {
+  color: var(--login-primary);
+  font-weight: 600;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: var(--login-primary);
+  border-radius: 4rpx;
+}
+
+/* 表单 */
+.form-group {
+  margin-bottom: 35rpx;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--login-input-bg);
+  border-radius: 24rpx;
+  padding: 0 30rpx;
+  height: 100rpx;
+  margin-bottom: 30rpx;
+  border: 2rpx solid var(--login-border);
+  transition: all 0.3s;
+}
+
+.password-input {
+  flex: 1;
+  height: 100%;
+  font-size: 30rpx;
+  color: var(--login-text-primary);
+  padding-right: 20rpx;
+}
+
+.input-wrapper:focus-within {
+  background: #ffffff;
+  border-color: var(--login-primary);
+  box-shadow: 0 0 0 4rpx rgba(99, 102, 241, 0.15);
+}
+
+.icon {
+  font-size: 36rpx;
+  margin-right: 24rpx;
+  color: var(--login-primary);
+}
+
+.input-field {
+  flex: 1;
+  height: 100%;
+  font-size: 30rpx;
+  color: var(--login-text-primary);
+}
+
+.placeholder {
+  color: var(--login-text-light);
+}
+
+.code-wrapper {
+  padding-right: 16rpx;
+}
+
+.code-btn {
+  font-size: 26rpx;
+  color: var(--login-primary);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 12rpx 24rpx;
+  border-radius: 16rpx;
+  font-weight: 500;
+}
+
+.code-btn:active {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+.login-btn {
+  width: 100% !important;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: var(--login-primary);
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: 600;
+  border-radius: 48rpx;
+  box-shadow: 0 10rpx 20rpx rgba(99, 102, 241, 0.3);
+  padding: 0;
+  margin-bottom: 40rpx;
+  margin-top: 0;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 6rpx 10rpx rgba(99, 102, 241, 0.25);
+}
+
+.footer-links {
+  text-align: center;
+  font-size: 28rpx;
+}
+
+.footer-links .text {
+  color: var(--login-text-secondary);
+}
+
+.footer-links .link {
+  color: var(--login-primary);
+  font-weight: 600;
+  margin-left: 10rpx;
+}
+
+.password-toggle {
+  font-size: 28rpx;
+  padding: 8rpx;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  color: var(--login-text-light);
+  flex-shrink: 0;
+}
+
+.password-toggle:active {
+  opacity: 1;
+}
+
+.toggle-icon {
+  font-size: 28rpx;
+}
+
+.forgot-password-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32rpx;
+  margin-top: 6rpx;
+}
+
+.forgot-password {
+  font-size: 26rpx;
+  color: var(--login-text-light);
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.forgot-password:active {
+  color: var(--login-primary);
+  background: rgba(99, 102, 241, 0.05);
+  transform: scale(0.98);
+}
+
+.agreement-box {
+  margin-bottom: 40rpx;
+  display: flex;
+  justify-content: center;
+}
+
+.agreement-label {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.agreement-label .text {
+  color: var(--login-text-secondary);
+}
+
+.agreement-label .link {
+  color: var(--login-primary);
+}
+

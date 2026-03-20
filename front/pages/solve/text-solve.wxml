@@ -1,0 +1,139 @@
+<!--pages/solve/text-solve.wxml-->
+<view class="text-solve-container">
+  <!-- 顶部提示 -->
+  <view class="header-tip">
+    <t-icon name="info-circle" size="36rpx" color="#0052d9" />
+    <text class="tip-text">请输入题目内容，AI将为您提供详细解答</text>
+  </view>
+  
+  <!-- 题目输入区 -->
+  <view class="question-input">
+    <t-card title="题目内容" description="请输入或粘贴题目">
+      <t-textarea
+        class="question-textarea"
+        placeholder="请输入题目内容，支持文字、公式等..."
+        value="{{questionContent}}"
+        bind:change="onQuestionChange"
+        maxlength="2000"
+        indicator
+        autosize
+      />
+      
+      <!-- 题目图片预览 -->
+      <view class="image-preview" wx:if="{{questionImages.length > 0}}">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{questionImages}}" wx:key="index">
+            <t-image
+              class="preview-image"
+              src="{{item}}"
+              mode="aspectFit"
+              width="160rpx"
+              height="160rpx"
+            />
+            <view class="image-delete" bindtap="deleteImage" data-index="{{index}}">
+              <t-icon name="close" size="32rpx" color="#fff" />
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 辅助功能 -->
+      <view class="input-tools">
+        <view class="tool-item" bindtap="chooseImage">
+          <t-icon name="image" size="40rpx" color="#0052d9" />
+          <text>添加图片</text>
+        </view>
+        <view class="tool-item" bindtap="pasteFromClipboard">
+          <t-icon name="paste" size="40rpx" color="#0052d9" />
+          <text>粘贴</text>
+        </view>
+        <view class="tool-item" bindtap="clearContent">
+          <t-icon name="delete" size="40rpx" color="#d54941" />
+          <text>清空</text>
+        </view>
+      </view>
+    </t-card>
+  </view>
+  
+  <!-- 高级选项 -->
+  <view class="advanced-options">
+    <t-card title="解题选项" description="设置解题偏好">
+      <view class="option-item">
+        <view class="option-label">科目选择</view>
+        <view class="option-content">
+          <t-tag
+            wx:for="{{subjects}}"
+            wx:key="id"
+            theme="{{item.selected ? 'primary' : 'default'}}"
+            variant="{{item.selected ? 'dark' : 'light'}}"
+            size="medium"
+            bindtap="selectSubject"
+            data-id="{{item.id}}"
+          >
+            {{item.name}}
+          </t-tag>
+        </view>
+      </view>
+      
+      <t-divider />
+      
+      <view class="option-item">
+        <view class="option-label">解题模式</view>
+        <view class="option-content">
+          <t-tag
+            wx:for="{{solveModes}}"
+            wx:key="id"
+            theme="{{item.selected ? 'primary' : 'default'}}"
+            variant="{{item.selected ? 'dark' : 'light'}}"
+            size="medium"
+            bindtap="selectSolveMode"
+            data-id="{{item.id}}"
+          >
+            {{item.name}}
+          </t-tag>
+        </view>
+      </view>
+    </t-card>
+  </view>
+  
+  <!-- 历史记录 -->
+  <view class="recent-questions" wx:if="{{recentQuestions.length > 0}}">
+    <t-card title="最近解题" description="点击可快速查看历史解题结果">
+      <view class="recent-list">
+        <view
+          class="recent-item"
+          wx:for="{{recentQuestions}}"
+          wx:key="id"
+          bindtap="viewHistoryResult"
+          data-id="{{item.id}}"
+        >
+          <view class="recent-content">{{item.content}}</view>
+          <view class="recent-time">{{item.time}}</view>
+        </view>
+      </view>
+    </t-card>
+  </view>
+  
+  <!-- 提交按钮 -->
+  <view class="submit-section">
+    <t-button
+      class="submit-btn"
+      theme="primary"
+      size="large"
+      disabled="{{!questionContent.trim() || submitting}}"
+      loading="{{submitting}}"
+      bindtap="submitQuestion"
+    >
+      {{submitting ? '解题中...' : '开始解题'}}
+    </t-button>
+  </view>
+  
+  <!-- 提交中状态 -->
+  <view class="loading-overlay" wx:if="{{submitting}}">
+    <view class="loading-content">
+      <t-loading theme="circular" size="60rpx" text="AI正在分析题目..." />
+    </view>
+  </view>
+</view>
+
+<t-toast id="toast" />

@@ -1,0 +1,183 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.header-card {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  color: #fff;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(18, 150, 219, 0.2);
+}
+
+.subject-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.mastery-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+  opacity: 0.9;
+}
+
+.progress-bg {
+  height: 12rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 6rpx;
+  margin-bottom: 30rpx;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #fff;
+  border-radius: 6rpx;
+}
+
+.action-btn {
+  background: #fff;
+  color: #1296db;
+  text-align: center;
+  padding: 16rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.knowledge-tree {
+  background: var(--color-surface);
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.02);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--color-text-main);
+  margin-bottom: 30rpx;
+  padding-left: 10rpx;
+  border-left: 8rpx solid var(--color-primary);
+}
+
+.chapter-item {
+  border-bottom: 1rpx solid #f8f8f8;
+}
+
+.chapter-item:last-child {
+  border-bottom: none;
+}
+
+.chapter-header {
+  padding: 30rpx 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chapter-info {
+  display: flex;
+  align-items: center;
+}
+
+.chapter-name {
+  font-size: 30rpx;
+  color: var(--color-text-main);
+  font-weight: 500;
+  margin-right: 20rpx;
+}
+
+.chapter-progress {
+  font-size: 24rpx;
+  color: var(--color-text-sub);
+}
+
+.arrow {
+  font-size: 24rpx;
+  color: #ccc;
+  transform: rotate(0deg);
+  transition: transform 0.3s;
+}
+
+.arrow.expanded {
+  transform: rotate(90deg);
+}
+
+.points-list {
+  background: #f9f9f9;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.point-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx dashed #eee;
+}
+
+.point-item:last-child {
+  border-bottom: none;
+}
+
+.point-info {
+  flex: 1;
+}
+
+.point-name {
+  font-size: 28rpx;
+  color: var(--color-text-main);
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.point-status {
+  display: flex;
+  align-items: center;
+}
+
+.mini-progress {
+  width: 100rpx;
+  height: 8rpx;
+  background: #eee;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+  overflow: hidden;
+}
+
+.mini-bar {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 4rpx;
+}
+
+.point-score {
+  font-size: 22rpx;
+  color: var(--color-text-sub);
+}
+
+.practice-btn {
+  font-size: 24rpx;
+  color: var(--color-primary);
+  border: 1rpx solid var(--color-primary);
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40rpx;
+  color: var(--color-text-sub);
+  font-size: 28rpx;
+}

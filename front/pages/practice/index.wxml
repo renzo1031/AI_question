@@ -1,0 +1,294 @@
+<view class="container" style="padding-top: {{navBarHeight+20}}px;">
+  <!-- 顶部背景 -->
+  <view class="header-bg"></view>
+
+  <!-- 顶部导航占位 -->
+  <view class="custom-nav {{isScrolled ? 'scrolled' : ''}}" style="height: {{navBarHeight+20}}px;">
+    <view class="nav-content" style="bottom: 10px;">
+      <view class="nav-title-wrapper">
+        <text class="nav-title">AI 智能练习</text>
+        <text class="nav-subtitle">个性化学习，高效提升</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快速统计卡片 -->
+  <view class="stats-section">
+    <view class="stats-cards">
+      <view class="stat-card">
+        <view class="stat-icon">📚</view>
+        <view class="stat-content">
+          <text class="stat-number">{{totalQuestions}}</text>
+          <text class="stat-label">已练习</text>
+        </view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-icon">⭐</view>
+        <view class="stat-content">
+          <text class="stat-number">{{accuracyRate}}%</text>
+          <text class="stat-label">正确率</text>
+        </view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-icon">🔥</view>
+        <view class="stat-content">
+          <text class="stat-number">{{streakDays}}</text>
+          <text class="stat-label">连续天数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 年级选择 -->
+  <view class="grade-section">
+    <view class="section-header">
+      <text class="section-title">选择年级</text>
+      <text class="section-subtitle">{{grades[gradeIndex]}}</text>
+    </view>
+    <scroll-view class="grade-scroll" scroll-x enable-flex show-scrollbar="{{false}}">
+      <view class="grade-list">
+        <view 
+          class="grade-item {{gradeIndex === index ? 'active' : ''}}" 
+          wx:for="{{grades}}" 
+          wx:key="*this"
+          bindtap="onGradeSelect"
+          data-index="{{index}}"
+        >
+          <text class="grade-text">{{item}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="content-wrapper">
+    <!-- 学科选择 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">选择学科</text>
+        <text class="section-subtitle">{{subjects[subjectIndex]}}</text>
+      </view>
+      <view class="subject-grid">
+        <view 
+          class="subject-card {{subjectIndex === index ? 'active' : ''}}" 
+          wx:for="{{subjects}}" 
+          wx:key="*this"
+          bindtap="onSubjectSelect"
+          data-index="{{index}}"
+        >
+          <view class="subject-icon-wrapper">
+            <text class="subject-icon">{{subjectIcons[item]}}</text>
+          </view>
+          <view class="subject-info">
+            <text class="subject-name">{{item}}</text>
+            <text class="subject-desc">{{subjectDescs[item]}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 智能推荐 -->
+    <view class="section recommendation-section">
+      <view class="section-header">
+        <text class="section-title">智能推荐</text>
+        <view class="ai-badge">
+          <text class="ai-icon">🤖</text>
+          <text class="ai-text">AI推荐</text>
+        </view>
+      </view>
+      <view class="recommendation-card">
+        <view class="rec-header">
+          <view class="rec-icon">🎯</view>
+          <view class="rec-title">今日练习重点</view>
+        </view>
+        <view class="rec-content">
+          <text class="rec-text">{{recommendation}}</text>
+        </view>
+        <view class="rec-actions">
+          <view class="rec-btn apply-btn" bindtap="applyRecommendation">应用推荐</view>
+          <view class="rec-btn skip-btn" bindtap="skipRecommendation">跳过</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 练习设置 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="section-title">练习设置</text>
+        <view class="preset-btn" bindtap="usePresetSettings">
+          <text class="preset-icon">⚡</text>
+          <text class="preset-text">快速设置</text>
+        </view>
+      </view>
+      
+      <view class="settings-grid">
+        <!-- 章节选择 -->
+        <view class="setting-card">
+          <picker bindchange="onKpChange" value="{{kpIndex}}" range="{{knowledgePoints}}" disabled="{{knowledgePoints.length === 0}}">
+            <view class="setting-content">
+              <view class="setting-header">
+                <view class="setting-icon">📑</view>
+                <view class="setting-info">
+                  <text class="setting-title">章节范围</text>
+                  <text class="setting-value {{kpIndex >= 0 ? '' : 'placeholder'}}">
+                    {{kpIndex >= 0 ? knowledgePoints[kpIndex] : (knowledgePoints.length > 0 ? '点击选择章节' : '该学科暂无章节数据')}}
+                  </text>
+                </view>
+              </view>
+              <view class="setting-arrow">
+                <text class="arrow-icon">></text>
+              </view>
+            </view>
+          </picker>
+        </view>
+
+        <!-- 题型选择 -->
+        <view class="setting-card">
+          <view class="setting-content">
+            <view class="setting-header">
+              <view class="setting-icon">📝</view>
+              <view class="setting-info">
+                <text class="setting-title">题目类型</text>
+                <text class="setting-value">{{questionTypes[qtIndex]}}</text>
+              </view>
+            </view>
+            <view class="setting-arrow">
+              <text class="arrow-icon"></text>
+            </view>
+          </view>
+          <view class="setting-dropdown">
+            <view 
+              class="dropdown-item {{qtIndex === index ? 'active' : ''}}" 
+              wx:for="{{questionTypes}}" 
+              wx:key="*this"
+              bindtap="onQtSelect"
+              data-index="{{index}}"
+            >
+              <text class="dropdown-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 难度设置 -->
+        <view class="setting-card">
+          <view class="setting-content">
+            <view class="setting-header">
+              <view class="setting-icon">📊</view>
+              <view class="setting-info">
+                <text class="setting-title">难度等级</text>
+                <text class="setting-value">{{difficultyDesc}} ({{difficulty}})</text>
+              </view>
+            </view>
+          </view>
+          <view class="difficulty-slider">
+            <slider 
+              min="1" max="10" 
+              value="{{difficulty}}" 
+              activeColor="#0EA5E9" 
+              block-size="20" 
+              bindchange="onDifficultyChange"
+              bindchanging="onDifficultyChange"
+            />
+            <view class="difficulty-labels">
+              <text class="diff-label">入门</text>
+              <text class="diff-label">基础</text>
+              <text class="diff-label">进阶</text>
+              <text class="diff-label">困难</text>
+              <text class="diff-label">挑战</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 数量设置 -->
+        <view class="setting-card">
+          <view class="setting-content">
+            <view class="setting-header">
+              <setting-icon>🔢</setting-icon>
+              <view class="setting-info">
+                <text class="setting-title">题目数量</text>
+                <text class="setting-value">{{count}} 题</text>
+              </view>
+            </view>
+          </view>
+          <view class="quantity-stepper">
+            <view class="stepper-btn minus {{count <= 5 ? 'disabled' : ''}}" catchtap="onCountChange" data-type="minus">-</view>
+            <view class="stepper-value">{{count}}</view>
+            <view class="stepper-btn add {{count >= 50 ? 'disabled' : ''}}" catchtap="onCountChange" data-type="add">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 学习目标 -->
+    <view class="section goals-section">
+      <view class="section-header">
+        <text class="section-title">学习目标</text>
+        <text class="section-subtitle">基于你的学习进度定制</text>
+      </view>
+      <view class="goals-grid">
+        <view class="goal-card">
+          <view class="goal-icon">🎯</view>
+          <view class="goal-content">
+            <text class="goal-title">巩固基础</text>
+            <text class="goal-desc">重点练习基础知识点</text>
+          </view>
+          <view class="goal-progress">
+            <view class="progress-bar">
+      <view class="progress-fill" style="width: 65%"></view>
+    </view>
+    <text class="progress-text">65%</text>
+          </view>
+        </view>
+        <view class="goal-card">
+          <view class="goal-icon">🚀</view>
+          <view class="goal-content">
+            <text class="goal-title">提升能力</text>
+            <text class="goal-desc">挑战更高难度题目</text>
+          </view>
+          <view class="goal-progress">
+            <view class="progress-bar">
+      <view class="progress-fill" style="width: 30%"></view>
+    </view>
+    <text class="progress-text">30%</text>
+          </view>
+        </view>
+        <view class="goal-card">
+          <view class="goal-icon">⏱</view>
+          <view class="goal-content">
+            <text class="goal-title">保持节奏</text>
+            <text class="goal-desc">每日坚持练习</text>
+          </view>
+          <view class="goal-progress">
+            <view class="progress-bar">
+      <view class="progress-fill" style="width: 80%"></view>
+    </view>
+    <text class="progress-text">80%</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="action-area">
+      <button class="start-btn" bindtap="startPractice" loading="{{loading}}">
+        <view class="btn-content">
+          <text class="btn-text">开始练习</text>
+          <view class="btn-icon">
+            <text class="icon-arrow">➜</text>
+          </view>
+        </view>
+      </button>
+      
+      <!-- 快速操作按钮 -->
+      <view class="quick-actions">
+        <view class="quick-btn" bindtap="quickReview">
+          <text class="quick-icon">📋</text>
+          <text class="quick-text">快速复习</text>
+        </view>
+        <view class="quick-btn" bindtap="viewHistory">
+          <text class="quick-icon">📊</text>
+          <text class="quick-text">练习记录</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

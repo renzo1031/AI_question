@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "学习概览",
+  "usingComponents": {
+    "t-tabs": "tdesign-miniprogram/tabs/tabs",
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "t-card": "tdesign-miniprogram/card/card",
+    "t-cell": "tdesign-miniprogram/cell/cell",
+    "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+    "t-icon": "tdesign-miniprogram/icon/icon",
+    "t-progress": "tdesign-miniprogram/progress/progress",
+    "t-button": "tdesign-miniprogram/button/button",
+    "t-grid": "tdesign-miniprogram/grid/grid",
+    "t-grid-item": "tdesign-miniprogram/grid-item/grid-item",
+    "t-badge": "tdesign-miniprogram/badge/badge",
+    "t-loading": "tdesign-miniprogram/loading/loading"
+  }
+}

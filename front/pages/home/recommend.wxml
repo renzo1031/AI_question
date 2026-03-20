@@ -1,0 +1,114 @@
+<!-- 今日推荐页面 -->
+<view class="page-container">
+  <!-- 推荐分类标签 -->
+  <view class="category-tabs">
+    <t-tabs value="{{activeTab}}" bindchange="onTabChange">
+      <t-tab-panel value="all" label="全部" />
+      <t-tab-panel value="practice" label="练习" />
+      <t-tab-panel value="knowledge" label="知识点" />
+      <t-tab-panel value="course" label="课程" />
+    </t-tabs>
+  </view>
+
+  <!-- 推荐内容列表 -->
+  <view class="recommend-list">
+    <!-- 练习推荐 -->
+    <block wx:if="{{activeTab === 'all' || activeTab === 'practice'}}">
+      <view class="section-title">练习推荐</view>
+      <t-card wx:for="{{practiceRecommend}}" wx:key="id" class="recommend-card">
+        <view class="recommend-item" bindtap="goToPractice" data-id="{{item.id}}">
+          <view class="item-header">
+            <text class="item-title">{{item.title}}</text>
+            <t-tag wx:if="{{item.difficulty}}" theme="{{item.difficultyTheme}}" size="small">{{item.difficultyText}}</t-tag>
+          </view>
+          <view class="item-content">
+            <view class="item-desc">{{item.description}}</view>
+            <view class="item-tags">
+              <t-tag wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" size="small" variant="light">{{tag}}</t-tag>
+            </view>
+          </view>
+          <view class="item-footer">
+            <view class="item-stats">
+              <text class="stat-item">{{item.questionCount}}题</text>
+              <text class="stat-item">{{item.completedCount}}人完成</text>
+              <text class="stat-item">{{item.accuracy}}%正确率</text>
+            </view>
+            <t-button size="small" theme="primary">开始练习</t-button>
+          </view>
+        </view>
+      </t-card>
+    </block>
+
+    <!-- 知识点推荐 -->
+    <block wx:if="{{activeTab === 'all' || activeTab === 'knowledge'}}">
+      <view class="section-title">知识点推荐</view>
+      <t-card wx:for="{{knowledgeRecommend}}" wx:key="id" class="recommend-card">
+        <view class="recommend-item" bindtap="goToKnowledge" data-id="{{item.id}}">
+          <view class="item-header">
+            <text class="item-title">{{item.title}}</text>
+            <t-tag theme="primary" size="small">{{item.subject}}</t-tag>
+          </view>
+          <view class="item-content">
+            <view class="item-desc">{{item.description}}</view>
+            <view class="knowledge-progress">
+              <text class="progress-text">掌握度: {{item.mastery}}%</text>
+              <view class="progress-bar">
+                <view class="progress-fill" style="width: {{item.mastery}}%; background-color: {{item.progressColor}};"></view>
+              </view>
+            </view>
+          </view>
+          <view class="item-footer">
+            <view class="item-stats">
+              <text class="stat-item">{{item.relatedQuestions}}相关题目</text>
+              <text class="stat-item">{{item.studyTime}}分钟学习</text>
+            </view>
+            <t-button size="small" theme="primary">开始学习</t-button>
+          </view>
+        </view>
+      </t-card>
+    </block>
+
+    <!-- 课程推荐 -->
+    <block wx:if="{{activeTab === 'all' || activeTab === 'course'}}">
+      <view class="section-title">课程推荐</view>
+      <t-card wx:for="{{courseRecommend}}" wx:key="id" class="recommend-card">
+        <view class="recommend-item course-item" bindtap="goToCourse" data-id="{{item.id}}">
+          <view class="course-image">
+            <t-image mode="aspectFill" src="{{item.cover}}" />
+          </view>
+          <view class="course-info">
+            <view class="item-header">
+              <text class="item-title">{{item.title}}</text>
+              <t-badge wx:if="{{item.isHot}}" count="热门" color="var(--td-error-color)" />
+            </view>
+            <view class="item-content">
+              <view class="item-desc">{{item.description}}</view>
+              <view class="course-meta">
+                <text class="meta-item">{{item.teacher}}</text>
+                <text class="meta-item">{{item.duration}}</text>
+                <text class="meta-item">{{item.students}}人学习</text>
+              </view>
+            </view>
+            <view class="item-footer">
+              <view class="course-rating">
+                <text class="rating-score">{{item.rating}}</text>
+                <view class="rating-stars">
+                  <t-icon wx:for="{{5}}" wx:key="*this" name="star-filled" 
+                    color="{{index < item.rating ? 'var(--td-warning-color)' : 'var(--td-bg-color-component)'}}" 
+                    size="16" />
+                </view>
+              </view>
+              <t-button size="small" theme="primary">开始学习</t-button>
+            </view>
+          </view>
+        </view>
+      </t-card>
+    </block>
+  </view>
+
+  <!-- 空状态 -->
+  <t-empty wx:if="{{!loading && recommendList.length === 0}}" description="暂无推荐内容" />
+
+  <!-- 加载状态 -->
+  <t-loading wx:if="{{loading}}" theme="circular" text="加载中..." />
+</view>

@@ -1,0 +1,69 @@
+<view class="container">
+  <view class="content">
+    <!-- 头部欢迎区 -->
+    <view class="header">
+      <view class="logo-box">
+        <text class="logo">🎓</text>
+      </view>
+      <view class="greeting">
+        <text class="title">欢迎回来！</text>
+        <text class="subtitle">准备好开始今天的学习了吗？</text>
+      </view>
+    </view>
+
+    <!-- 登录卡片 -->
+    <view class="card">
+      <view class="tab-header">
+        <view class="tab-item {{loginType === 'password' ? 'active' : ''}}" bindtap="switchLoginType" data-type="password">密码登录</view>
+        <view class="tab-item {{loginType === 'code' ? 'active' : ''}}" bindtap="switchLoginType" data-type="code">验证码登录</view>
+      </view>
+
+      <view class="form-group">
+        <!-- 账号输入 -->
+        <view class="input-wrapper">
+          <view class="icon">👤</view>
+          <input class="input-field" type="text" placeholder="账号 / 手机号" placeholder-class="placeholder" value="{{account}}" bindinput="onAccountInput" />
+        </view>
+
+        <!-- 密码输入 -->
+        <view class="input-wrapper" wx:if="{{loginType === 'password'}}">
+          <view class="icon">🔒</view>
+          <input class="input-field password-input" type="{{showPassword ? 'text' : 'password'}}" placeholder="请输入密码" placeholder-class="placeholder" value="{{password}}" bindinput="onPasswordInput" />
+          <view class="password-toggle" bindtap="togglePasswordVisibility">
+            <text class="toggle-icon">{{showPassword ? '👁️' : '🙈'}}</text>
+          </view>
+        </view>
+        <view class="forgot-password-wrapper">
+          <view class="forgot-password" bindtap="goToForgotPassword">忘记密码</view>
+        </view>
+
+        <!-- 验证码输入 -->
+        <view class="input-wrapper code-wrapper" wx:if="{{loginType === 'code'}}">
+          <view class="icon">🛡️</view>
+          <input class="input-field" type="number" placeholder="请输入验证码" placeholder-class="placeholder" value="{{code}}" bindinput="onCodeInput" />
+          <view class="code-btn {{counting ? 'disabled' : ''}}" bindtap="sendCode">{{counting ? count + 's后重发' : '获取验证码'}}</view>
+        </view>
+      </view>
+
+      <button class="login-btn" bindtap="handleLogin" loading="{{loading}}">立即登录</button>
+
+      <!-- 协议勾选 -->
+      <view class="agreement-box">
+        <checkbox-group bindchange="onAgreementChange">
+          <label class="agreement-label">
+            <checkbox value="agreed" checked="{{agreed}}" color="#1890ff" style="transform:scale(0.7)"/>
+            <text class="text">我已阅读并同意</text>
+            <text class="link" catchtap="showUserAgreement">《用户协议》</text>
+            <text class="text">和</text>
+            <text class="link" catchtap="showPrivacyPolicy">《隐私政策》</text>
+          </label>
+        </checkbox-group>
+      </view>
+
+      <view class="footer-links">
+        <text class="text">还没有账号？</text>
+        <text class="link" bindtap="goToRegister">去注册</text>
+      </view>
+    </view>
+  </view>
+</view>

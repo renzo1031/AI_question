@@ -1,0 +1,49 @@
+<view class="page">
+  <view class="nav" style="padding-top: {{statusBarHeight}}px; height: {{navHeight}}px;">
+    <view class="nav-left" style="width: {{sideWidth}}px;"></view>
+    <text class="nav-title">裁剪题目</text>
+    <view class="nav-right" style="width: {{sideWidth}}px;"></view>
+  </view>
+
+  <view class="top-spacer" style="height: {{navHeight}}px;"></view>
+
+  <view class="stage" style="height: {{stageH}}px;">
+    <view class="stage-inner" style="width: {{areaW}}px; height: {{areaH}}px;">
+      <image class="stage-image" src="{{src}}" style="width: {{areaW}}px; height: {{areaH}}px;" mode="aspectFill"></image>
+
+      <view class="shade shade-top" style="height: {{cropY}}px;"></view>
+      <view class="shade shade-left" style="top: {{cropY}}px; height: {{cropH}}px; width: {{cropX}}px;"></view>
+      <view class="shade shade-right" style="top: {{cropY}}px; left: {{cropX + cropW}}px; height: {{cropH}}px; width: {{areaW - cropX - cropW}}px;"></view>
+      <view class="shade shade-bottom" style="top: {{cropY + cropH}}px; height: {{areaH - cropY - cropH}}px;"></view>
+
+      <view
+        class="crop-box"
+        style="left: {{cropX}}px; top: {{cropY}}px; width: {{cropW}}px; height: {{cropH}}px;"
+        catchtouchstart="onBoxTouchStart"
+        catchtouchmove="onBoxTouchMove"
+        catchtouchend="onTouchEnd"
+        catchtouchcancel="onTouchEnd"
+      >
+        <view class="handle-edge handle-n" data-h="n" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle-edge handle-s" data-h="s" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle-edge handle-w" data-h="w" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle-edge handle-e" data-h="e" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+
+        <view class="handle handle-nw" data-h="nw" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle handle-ne" data-h="ne" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle handle-sw" data-h="sw" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+        <view class="handle handle-se" data-h="se" catchtouchstart="onHandleTouchStart" catchtouchmove="onHandleTouchMove" catchtouchend="onTouchEnd" catchtouchcancel="onTouchEnd"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="tip">拖动裁剪框或四角调整大小，只保留题目区域</view>
+    <view class="actions">
+      <button class="btn btn-ghost" bindtap="cancel">取消</button>
+      <button class="btn btn-primary" bindtap="confirm">完成</button>
+    </view>
+  </view>
+
+  <canvas type="2d" id="cropCanvas" class="hidden-canvas" style="width: {{canvasW}}px; height: {{canvasH}}px;"></canvas>
+</view>

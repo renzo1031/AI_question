@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/practice/index",
+    "pages/mistake/index",
+    "pages/profile/index",
+    "pages/auth/login",
+    "pages/auth/register",
+    "pages/auth/forgot-password",
+    "pages/ai/chat",
+    "pages/analysis/index",
+    "pages/subject/detail",
+    "pages/practice/do",
+    "pages/profile/edit/index",
+    "pages/ai/history/index",
+    "pages/ai/search-result/index",
+    "pages/camera/index",
+    "pages/camera/crop/index",
+    "pages/mistake/detail/detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "AI智学",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1296db",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_active.png"
+      },
+      {
+        "pagePath": "pages/practice/index",
+        "text": "练习",
+        "iconPath": "images/practice.png",
+        "selectedIconPath": "images/practice_active.png"
+      },
+      {
+        "pagePath": "pages/mistake/index",
+        "text": "错题本",
+        "iconPath": "images/mistake.png",
+        "selectedIconPath": "images/mistake_active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

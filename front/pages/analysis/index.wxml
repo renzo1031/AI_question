@@ -1,0 +1,144 @@
+<view class="container">
+  <view class="header-bg"></view>
+  
+  <view class="content-wrapper">
+    <!-- 时间窗口选择 -->
+    <view class="time-selector">
+      <view class="time-item {{timeWindow === 7 ? 'active' : ''}}" bindtap="changeTimeWindow" data-days="{{7}}">最近7天</view>
+      <view class="time-item {{timeWindow === 30 ? 'active' : ''}}" bindtap="changeTimeWindow" data-days="{{30}}">最近30天</view>
+      <view class="time-item {{timeWindow === 90 ? 'active' : ''}}" bindtap="changeTimeWindow" data-days="{{90}}">最近90天</view>
+    </view>
+
+    <!-- 概览数据 -->
+    <block wx:if="{{overview}}">
+      <view class="overview-section">
+        <view class="main-card">
+          <view class="card-title">学习表现</view>
+          <view class="trend-badge {{overview.trend === '进步' ? 'up' : (overview.trend === '需加油' ? 'down' : 'stable')}}">
+            {{overview.trend}}
+          </view>
+          <view class="stat-grid">
+            <view class="stat-item">
+              <text class="stat-value">{{overview.recent_stats.accuracy}}%</text>
+              <text class="stat-label">近期正确率</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-value">{{overview.recent_stats.total_questions}}</text>
+              <text class="stat-label">近期做题数</text>
+            </view>
+            <view class="stat-item">
+              <text class="stat-value">{{overview.last_10_accuracy}}%</text>
+              <text class="stat-label">最近10题</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="secondary-stats">
+          <view class="small-card">
+            <text class="small-label">累计做题</text>
+            <text class="small-value">{{overview.all_time_stats.total_questions}}</text>
+          </view>
+          <view class="small-card">
+            <text class="small-label">全周期正确率</text>
+            <text class="small-value">{{overview.all_time_stats.accuracy}}%</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 每日活跃度 -->
+      <view class="section-card">
+        <view class="section-header">
+          <text class="section-title">活跃趋势</text>
+        </view>
+        <view class="daily-chart">
+          <view class="chart-item" wx:for="{{overview.daily_stats}}" wx:key="date">
+            <view class="bar-wrapper">
+              <view class="bar" style="height: {{item.count * 10}}rpx; max-height: 120rpx;"></view>
+            </view>
+            <text class="date-label">{{item.date}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 能力分析 -->
+    <block wx:if="{{ability}}">
+      <view class="section-card">
+        <view class="section-header">
+          <text class="section-title">知识掌握度</text>
+        </view>
+        <view class="mastery-list">
+          <view class="mastery-item" wx:for="{{ability.knowledge_mastery}}" wx:key="knowledge_point">
+            <view class="mastery-info">
+              <text class="mastery-name">{{item.knowledge_point}}</text>
+              <text class="mastery-percent">{{item.mastery_pct}}%</text>
+            </view>
+            <view class="progress-container">
+              <view class="progress-bar" style="width: {{item.mastery_pct}}%"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 薄弱环节 -->
+      <view class="section-card" wx:if="{{ability.weak_points && ability.weak_points.length > 0}}">
+        <view class="section-header">
+          <text class="section-title">薄弱环节</text>
+          <text class="section-desc">建议重点复习</text>
+        </view>
+        <view class="weak-list">
+          <view class="weak-item" wx:for="{{ability.weak_points}}" wx:key="knowledge_point">
+            <view class="weak-content">
+              <view class="weak-header">
+                <text class="weak-tag">{{item.subject}}</text>
+                <text class="weak-name">{{item.knowledge_point}}</text>
+              </view>
+              <text class="weak-advice">{{item.suggestion}}</text>
+            </view>
+            <view class="weak-btn" bindtap="practiceWeakPoint" data-point="{{item}}">
+              <text>去练习</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 学习建议 -->
+      <view class="section-card" wx:if="{{ability.suggestions && ability.suggestions.length > 0}}">
+        <view class="section-header">
+          <text class="section-title">学习建议</text>
+        </view>
+        <view class="suggestion-list">
+          <view class="suggestion-item" wx:for="{{ability.suggestions}}" wx:key="*this">
+            <text class="dot">•</text>
+            <text class="suggestion-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 进步反馈 -->
+    <view class="section-card feedback-section" wx:if="{{feedback && feedback.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">成长足迹</text>
+      </view>
+      <view class="feedback-list">
+        <view class="feedback-item {{item.type}}" wx:for="{{feedback}}" wx:key="id">
+          <view class="feedback-icon">
+            <text wx:if="{{item.type === 'achievement'}}">🏆</text>
+            <text wx:elif="{{item.type === 'progress'}}">📈</text>
+            <text wx:else>✨</text>
+          </view>
+          <view class="feedback-info">
+            <text class="feedback-msg">{{item.message}}</text>
+            <text class="feedback-time">{{item.created_at}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{!overview && !loading}}">
+      <image src="/images/empty_data.png" mode="aspectFit"></image>
+      <text>暂无分析数据，多去做题吧！</text>
+    </view>
+  </view>
+</view>
